@@ -15,7 +15,7 @@ CREATE TABLE works (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    published_date INT NOT NULL,
+    publish_date INT NOT NULL,
     poet_id INT NOT NULL,
 	FOREIGN KEY (poet_id) REFERENCES poets(id)
 );
