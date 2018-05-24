@@ -6,6 +6,7 @@ import com.codecool.web.model.Poet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DatabasePoetDao extends AbstractDao implements PoetDao {
 
@@ -14,7 +15,7 @@ public class DatabasePoetDao extends AbstractDao implements PoetDao {
     }
 
     @Override
-    public Poet findByEmail(String email) throws Throwable {
+    public Poet findByEmail(String email) throws SQLException {
         if (email == null || "".equals(email)) {
             throw new IllegalArgumentException("Email cannot be null or empty!");
         }
@@ -30,7 +31,7 @@ public class DatabasePoetDao extends AbstractDao implements PoetDao {
         return null;
     }
 
-    private Poet fetchPoet(ResultSet resultSet) throws Throwable {
+    private Poet fetchPoet(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         String email = resultSet.getString("email");

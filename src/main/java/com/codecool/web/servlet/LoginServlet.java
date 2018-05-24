@@ -4,6 +4,7 @@ import com.codecool.web.dao.PoetDao;
 import com.codecool.web.dao.database.DatabasePoetDao;
 import com.codecool.web.model.Poet;
 import com.codecool.web.service.PoetService;
+import com.codecool.web.service.exception.ServiceException;
 import com.codecool.web.service.simple.SimplePoetService;
 
 import javax.servlet.annotation.WebServlet;
@@ -29,10 +30,10 @@ public final class LoginServlet extends AbstractServlet {
             req.getSession().setAttribute("poet", poet);
 
             sendMessage(resp, HttpServletResponse.SC_OK, poet);
+        } catch (ServiceException ex) {
+            sendMessage(resp, HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         } catch (SQLException ex) {
             handleSqlError(resp, ex);
-        } catch (Throwable ex) {
-            sendMessage(resp, HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         }
     }
 }

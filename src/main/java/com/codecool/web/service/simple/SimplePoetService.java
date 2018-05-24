@@ -5,6 +5,8 @@ import com.codecool.web.model.Poet;
 import com.codecool.web.service.PoetService;
 import com.codecool.web.service.exception.ServiceException;
 
+import java.sql.SQLException;
+
 public class SimplePoetService implements PoetService {
 
     private final PoetDao poetDao;
@@ -14,7 +16,7 @@ public class SimplePoetService implements PoetService {
     }
 
     @Override
-    public Poet loginPoet(String email, String password) throws Throwable {
+    public Poet loginPoet(String email, String password) throws SQLException, ServiceException {
         try {
             Poet poet = poetDao.findByEmail(email);
             if (poet == null || !poet.getPassword().equals(password)) {

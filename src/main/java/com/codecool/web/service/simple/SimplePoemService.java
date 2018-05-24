@@ -5,6 +5,7 @@ import com.codecool.web.model.Poem;
 import com.codecool.web.service.PoemService;
 import com.codecool.web.service.exception.ServiceException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class SimplePoemService implements PoemService {
@@ -16,15 +17,15 @@ public class SimplePoemService implements PoemService {
     }
 
     @Override
-    public List<Poem> getAllPoemsByPoetId(int poetId) throws Throwable {
+    public List<Poem> getAllPoemsByPoetId(int poetId) throws SQLException {
         return poemDao.findPoemsByPoetId(poetId);
     }
 
     @Override
-    public Poem getPoemFromPoetById(int poetId, int poemId) throws Throwable {
+    public Poem getPoemFromPoetById(int poetId, int poemId) throws SQLException, ServiceException {
         try {
             Poem poem = poemDao.findPoemFromPoetById(poetId, poemId);
-            if (poem.equals(null)){
+            if (poem == null){
                 throw new ServiceException("Poem not found!");
             }
             return poem;
@@ -36,7 +37,7 @@ public class SimplePoemService implements PoemService {
     }
 
     @Override
-    public int getNumberOfSubstringsInPoem(int poemId, String subString) throws Throwable {
+    public int getNumberOfSubstringsInPoem(int poemId, String subString) throws SQLException, ServiceException {
         try {
             int numOfSubstrings = poemDao.countNumberOfSubstringsInPoem(poemId, subString);
             if (numOfSubstrings == -1) {

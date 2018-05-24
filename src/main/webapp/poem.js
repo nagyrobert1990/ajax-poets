@@ -30,7 +30,7 @@ function onSearchClicked() {
     }
 
 function onPoemLoad(poem) {
-    const poemContentSpanEl = document.getElementById('contentofpoem');
+    const poemContentSpanEl = document.getElementById('contentOfPoem');
     poemContentSpanEl.textContent = poem.content;
 }
 

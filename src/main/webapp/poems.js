@@ -64,3 +64,4 @@ function onPoemsResponse() {
     } else {
         onOtherResponse(poemsContentDivEl, this);
     }
+}

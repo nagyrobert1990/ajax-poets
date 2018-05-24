@@ -33,8 +33,6 @@ public class PoemsServlet extends AbstractServlet {
             sendMessage(resp, HttpServletResponse.SC_OK, works);
         } catch (SQLException ex) {
             handleSqlError(resp, ex);
-        } catch (Throwable throwable) {
-            sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, throwable.getMessage());
         }
     }
 }
