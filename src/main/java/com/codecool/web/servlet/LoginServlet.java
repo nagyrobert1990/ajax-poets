@@ -1,6 +1,10 @@
 package com.codecool.web.servlet;
 
-import com.codecool.web.service.exception.ServiceException;
+import com.codecool.web.dao.PoetDao;
+import com.codecool.web.dao.database.DatabasePoetDao;
+import com.codecool.web.model.Poet;
+import com.codecool.web.service.PoetService;
+import com.codecool.web.service.simple.SimplePoetService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,20 +19,20 @@ public final class LoginServlet extends AbstractServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try (Connection connection = getConnection(req.getServletContext())) {
-            UserDao userDao = new DatabaseUserDao(connection);
-            LoginService loginService = new SimpleLoginService(userDao);
+            PoetDao poetDao = new DatabasePoetDao(connection);
+            PoetService poetService = new SimplePoetService(poetDao);
 
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            User user = loginService.loginUser(email, password);
-            req.getSession().setAttribute("user", user);
+            Poet poet = poetService.loginPoet(email, password);
+            req.getSession().setAttribute("poet", poet);
 
-            sendMessage(resp, HttpServletResponse.SC_OK, user);
-        } catch (ServiceException ex) {
-            sendMessage(resp, HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+            sendMessage(resp, HttpServletResponse.SC_OK, poet);
         } catch (SQLException ex) {
             handleSqlError(resp, ex);
+        } catch (Throwable ex) {
+            sendMessage(resp, HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         }
     }
 }
